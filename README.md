@@ -353,3 +353,126 @@ latest: digest: sha256:6e49841ad9e720a7baedcd41f9b666fcd7b583151d0763fe78101bb82
 ```
 
 
+
+
+==================================================================================================================================
+
+📘 Docker Networking – Bridge, Custom Bridge, Host & Overlay
+
+
+🧠 Topics Covered
+1️⃣ Bridge Network (Default)
+
+Docker automatically creates a default bridge network (docker0)
+
+Containers get private IP addresses (e.g. 172.17.x.x)
+
+Containers on the same bridge can communicate using IPs
+
+Docker uses NAT to allow containers to access the internet
+
+Key Learning
+
+Containers behave like machines inside a private LAN
+
+Networking issues must be verified using docker inspect, not assumptions
+
+
+
+
+2️⃣ NAT in Docker Bridge Networking
+
+
+Containers use private IPs, which are not routable on the internet
+
+Docker performs Network Address Translation (NAT) using the host’s IP
+
+Outgoing traffic appears to come from the Docker host
+
+Proof
+
+apt update works inside containers
+
+curl ifconfig.me shows host’s public IP, not container IP
+
+
+
+
+3️⃣ Custom Bridge Network
+
+
+Custom bridge networks provide better isolation and control
+
+Docker provides built-in DNS for containers on custom bridges
+
+Containers can communicate using container names instead of IPs
+
+Why Custom Bridge is Better
+
+Stronger isolation
+
+No IP hardcoding
+
+Production-friendly design
+
+Example
+
+docker network create my_bridge
+docker run -dit --name c1 --network my_bridge nginx
+docker run -dit --name c2 --network my_bridge nginx
+
+
+Inside container:
+
+ping c2
+
+
+
+
+
+4️⃣ Why Default Bridge is Discouraged in Production
+
+
+
+Weak isolation (all containers can talk to each other)
+
+No automatic DNS-based service discovery
+
+Harder to manage in microservices architecture
+
+Best Practice
+
+Always use custom bridge networks for real applications.
+
+
+
+
+5️⃣ Host Network
+
+
+Containers use the host’s network stack directly
+
+No private IP, no port mapping
+
+Very fast but no isolation
+
+Risks
+
+If container is compromised → host network is exposed
+
+Use Cases
+
+Network monitoring tools
+
+Performance-critical workloads
+
+Avoid for
+
+Web apps
+
+Databases
+
+Microservices
+
+
+
