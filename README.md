@@ -476,3 +476,32 @@ Microservices
 
 
 
+
+6️⃣ Overlay Network
+
+Enables container communication across multiple hosts
+
+Used in Docker Swarm / Kubernetes
+
+Creates a virtual network spanning machines
+
+Use Case
+
+Distributed microservices
+
+High availability systems
+
+
+
+🔍 Key Takeaways
+
+
+Bridge networks are suitable for single-host setups
+
+NAT allows containers to safely access the internet
+
+Custom bridges are essential for secure, maintainable applications
+
+Host networking is powerful but risky
+
+Overlay networks solve multi-host communication problems
